@@ -332,16 +332,8 @@ pytest tests/test_classifier.py -v
 
 ---
 
-## 📄 License
-
-MIT License - See LICENSE file for details
-
----
-
 ## 🤝 Contributing
 
 This is a hackathon project. We welcome improvements, bug reports, and feature requests!
 
 ---
-
-**Made with ❤️ for CI/CD automation**

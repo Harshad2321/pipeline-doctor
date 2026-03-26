@@ -257,31 +257,3 @@ class DependencyFixer:
                 return response.status_code == 200
         except Exception:
             return False
-
-
-if __name__ == "__main__":
-    # Test dependency fixer
-    import tempfile
-    import shutil
-
-    fixer = DependencyFixer()
-
-    # Create test directory
-    with tempfile.TemporaryDirectory() as tmpdir:
-        # Test Python dependency
-        req_file = os.path.join(tmpdir, "requirements.txt")
-        with open(req_file, 'w') as f:
-            f.write("requests==2.28.0\n")
-
-        error_info = {
-            "package_name": "numpy",
-            "language": "python"
-        }
-
-        result = fixer.fix_dependency(error_info, tmpdir)
-        print(f"Test result: {result}")
-
-        # Check if file was modified
-        with open(req_file, 'r') as f:
-            content = f.read()
-            print(f"Updated requirements.txt:\n{content}")

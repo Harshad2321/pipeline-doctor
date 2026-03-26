@@ -210,35 +210,3 @@ class LogFetcher:
         end_idx = min(len(lines), error_line_idx + context_lines)  # N lines after error
 
         return '\n'.join(lines[start_idx:end_idx])
-
-
-if __name__ == "__main__":
-    # Test the log fetcher
-    import sys
-    sys.path.insert(0, "..")
-    from config import load_config
-
-    try:
-        config = load_config()
-        fetcher = LogFetcher(config)
-
-        # Test with a pipeline ID (replace with actual ID for testing)
-        test_pipeline_id = input("Enter a failed pipeline ID to test: ").strip()
-
-        if test_pipeline_id:
-            print(f"\nFetching logs for pipeline {test_pipeline_id}...")
-            logs = fetcher.get_failed_job_logs(test_pipeline_id)
-
-            if logs:
-                print(f"\nFound {len(logs)} failed job(s)")
-                for log in logs:
-                    print(f"\nJob: {log['job_name']} (#{log['job_id']})")
-                    print(f"Stage: {log['stage']}")
-                    print(f"Failure reason: {log['failure_reason']}")
-                    print(f"\nCleaned logs (first 500 chars):")
-                    print(log['cleaned_logs'][:500])
-            else:
-                print("No logs found or fetch failed")
-
-    except SystemExit:
-        print("Configuration error - cannot test log fetcher")

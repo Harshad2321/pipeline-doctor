@@ -306,32 +306,3 @@ Manual review and intervention are required.
             pipeline_passed=False,
             attempt_number=-1
         )
-
-
-if __name__ == "__main__":
-    # Test escalator
-    import sys
-    sys.path.insert(0, "..")
-
-    from config import load_config
-
-    try:
-        config = load_config()
-        memory = FixMemory("test_escalator.db")
-        escalator = Escalator(config, memory)
-
-        # Test escalation notice
-        escalator._print_escalation_notice(
-            pipeline_id="12345",
-            job_id="67890",
-            error_type="syntax",
-            max_attempts=3,
-            web_url="https://gitlab.com/project/pipelines/12345"
-        )
-
-        # Clean up
-        from pathlib import Path
-        Path("test_escalator.db").unlink(missing_ok=True)
-
-    except SystemExit:
-        print("Configuration error - cannot test escalator")

@@ -4,6 +4,7 @@ Re-triggers pipelines after fixes and monitors their completion.
 """
 
 import time
+from typing import Optional
 
 import httpx
 from loguru import logger
@@ -190,29 +191,3 @@ class PipelineTrigger:
         except Exception as e:
             logger.error(f"[PIPELINE] Failed to get pipeline status: {e}")
             return "unknown"
-
-
-# Import for type hints
-from typing import Optional
-
-
-if __name__ == "__main__":
-    # Test pipeline trigger
-    import sys
-    sys.path.insert(0, "..")
-
-    from config import load_config
-
-    try:
-        config = load_config()
-        trigger = PipelineTrigger(config)
-
-        # Test getting pipeline status
-        test_pipeline_id = input("Enter a pipeline ID to check status: ").strip()
-
-        if test_pipeline_id:
-            status = trigger.get_pipeline_status(test_pipeline_id)
-            print(f"Pipeline #{test_pipeline_id} status: {status}")
-
-    except SystemExit:
-        print("Configuration error - cannot test pipeline trigger")

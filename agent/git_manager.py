@@ -370,22 +370,3 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"""
 """
 
         return description
-
-
-if __name__ == "__main__":
-    # Test git manager
-    import sys
-    sys.path.insert(0, "..")
-
-    from config import load_config
-
-    try:
-        config = load_config()
-        git_manager = GitManager(config)
-
-        print("Git manager initialized successfully")
-        print(f"Repository path: {git_manager.repo_path}")
-        print(f"Current branch: {git_manager.repo.active_branch.name}")
-
-    except SystemExit:
-        print("Configuration error - cannot test git manager")

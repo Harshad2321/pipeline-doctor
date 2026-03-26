@@ -262,35 +262,3 @@ class FixMemory:
         conn.close()
 
         return rows_deleted
-
-
-if __name__ == "__main__":
-    # Test the memory system
-    memory = FixMemory("test_fix_history.db")
-
-    # Save a test fix
-    fix_id = memory.save_fix(
-        pipeline_id="12345",
-        job_id="67890",
-        error_type="syntax",
-        error_message="SyntaxError: invalid syntax at line 42",
-        fix_applied="Fixed missing colon in function definition",
-        fix_strategy="openai_syntax_fix",
-        error_file="src/main.py",
-        pipeline_passed=True,
-        attempt_number=1
-    )
-
-    print(f"Saved fix with ID: {fix_id}")
-
-    # Try to find it
-    past_fix = memory.get_past_fix("syntax", "SyntaxError: invalid syntax at line 42")
-    print(f"Found past fix: {past_fix is not None}")
-
-    # Get stats
-    stats = memory.get_stats()
-    print(f"Stats: {stats}")
-
-    # Clean up test database
-    Path("test_fix_history.db").unlink(missing_ok=True)
-    print("Test completed successfully!")

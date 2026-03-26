@@ -147,27 +147,3 @@ class PipelineWatcher:
             Number of pipelines marked as processed
         """
         return len(self.processed_pipeline_ids)
-
-
-if __name__ == "__main__":
-    # Test the watcher
-    import sys
-    sys.path.insert(0, "..")
-    from config import load_config
-
-    try:
-        config = load_config()
-        watcher = PipelineWatcher(config)
-
-        print("Testing GitLab API connection...")
-        pipelines = watcher.get_failed_pipelines()
-
-        if pipelines:
-            print(f"Found {len(pipelines)} failed pipeline(s):")
-            for p in pipelines:
-                print(f"  - Pipeline #{p['id']} on {p['ref']}: {p['web_url']}")
-        else:
-            print("No failed pipelines found (or connection failed)")
-
-    except SystemExit:
-        print("Configuration error - cannot test watcher")

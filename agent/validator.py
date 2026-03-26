@@ -258,33 +258,3 @@ class FixValidator:
                 "reason": f"Validation error: {e}",
                 "validator_used": "go fmt"
             }
-
-
-if __name__ == "__main__":
-    # Test validator
-    import tempfile
-
-    validator = FixValidator()
-
-    # Test Python validation
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
-        f.write("def hello():\n    print('world')")
-        f.flush()
-        result = validator.validate_fix(f.name, "python")
-        print(f"Python valid file: {result}")
-        os.unlink(f.name)
-
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
-        f.write("def hello(\n    print('world')")  # Syntax error
-        f.flush()
-        result = validator.validate_fix(f.name, "python")
-        print(f"Python invalid file: {result}")
-        os.unlink(f.name)
-
-    # Test YAML validation
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.yml', delete=False) as f:
-        f.write("key: value\nlist:\n  - item1\n  - item2")
-        f.flush()
-        result = validator.validate_fix(f.name, "yaml")
-        print(f"YAML valid file: {result}")
-        os.unlink(f.name)

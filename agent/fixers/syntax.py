@@ -163,39 +163,3 @@ class SyntaxFixer:
                 "file_modified": None,
                 "strategy": "syntax_fix_failed"
             }
-
-
-if __name__ == "__main__":
-    # Test syntax fixer
-    import sys
-    import tempfile
-    sys.path.insert(0, "../..")
-
-    from config import load_config
-
-    try:
-        config = load_config()
-        fixer = SyntaxFixer(config)
-
-        # Create test file with syntax error
-        with tempfile.TemporaryDirectory() as tmpdir:
-            test_file = os.path.join(tmpdir, "test.py")
-            with open(test_file, 'w') as f:
-                f.write("def hello()\n    print('hi')")  # Missing colon
-
-            error_info = {
-                "error_file": "test.py",
-                "error_message": "SyntaxError: invalid syntax",
-                "error_line": 1,
-                "language": "python"
-            }
-
-            result = fixer.fix_syntax(error_info, tmpdir)
-            print(f"Test result: {result}")
-
-            if result.get("success"):
-                with open(test_file, 'r') as f:
-                    print(f"Fixed code:\n{f.read()}")
-
-    except SystemExit:
-        print("Configuration error - cannot test syntax fixer")
